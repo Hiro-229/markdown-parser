@@ -11,15 +11,30 @@ public class MarkdownParse {
         ArrayList<String> toReturn = new ArrayList<>();
         // find the next [, then find the ], then find the (, then read link upto next )
         int currentIndex = 0;
+        System.out.println(currentIndex);
         while(currentIndex < markdown.length()) {
+
+            if (markdown.substring(currentIndex, currentIndex+1).equals("\n")) {
+                currentIndex++;
+            }
+
+            //System.out.println("length of file: " + markdown.length());
+
             int openBracket = markdown.indexOf("[", currentIndex);
-            int closeBracket = markdown.lastIndexOf("]", openBracket);
+            //System.out.println("openBracket: " + openBracket);
+
+            int closeBracket = markdown.indexOf("]", openBracket);
+            //System.out.println("closeBracket: " + closeBracket);
+
             int openParen = markdown.indexOf("(", closeBracket);
-            int closeParen = markdown.lastIndexOf(")", openParen);
+            //System.out.println("openParen: " + openParen);
+
+            int closeParen = markdown.indexOf(")", openParen);
+            //System.out.println("closeParen: " +closeParen);
+
             toReturn.add(markdown.substring(openParen + 1, closeParen));
-            System.out.println(toReturn.get(currentIndex));
             currentIndex = closeParen + 1;
-            System.out.println(currentIndex);
+            //System.out.println(currentIndex);
         }
 
         return toReturn;
