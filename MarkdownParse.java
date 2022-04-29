@@ -11,37 +11,33 @@ public class MarkdownParse {
         ArrayList<String> toReturn = new ArrayList<>();
         // find the next [, then find the ], then find the (, then read link upto next )
         int currentIndex = 0;
-        System.out.println(currentIndex);
         while(currentIndex < markdown.length()) {
-
-            //System.out.println("length of file: " + markdown.length());
-
             int openBracket = markdown.indexOf("[", currentIndex);
-            //System.out.println("openBracket: " + openBracket);
-
+            if (openBracket == -1) {
+                return toReturn;
+            }
+            if (markdown.charAt(openBracket-1) == '!') {
+                openBracket = markdown.indexOf("[", openBracket+1);
+            }
+            if (openBracket == -1) {
+                return toReturn;
+            }
             int closeBracket = markdown.indexOf("]", openBracket);
-            //System.out.println("closeBracket: " + closeBracket);
-
-            int lastOpenParen = markdown.indexOf("(", closeBracket);
-            //System.out.println("openParen: " + openParen);
-
-            int lastCloseParen = markdown.indexOf(")", lastOpenParen);
-            //System.out.println("closeParen: " +closeParen);
-
-            int nextLinkOpenBracket = markdown.indexOf("[", lastOpenParen);
-            
-            if(nextLinkOpenBracket == -1){
-                lastCloseParen = markdown.length() - 1;
-                toReturn.add(markdown.substring(lastOpenParen + 1, lastCloseParen));
+            int finalOpenParen = markdown.indexOf("(", closeBracket);
+            int finalCloseParen = markdown.indexOf(")", finalOpenParen);
+            int nextOpenBracket = markdown.indexOf("[", finalOpenParen);
+            if (nextOpenBracket == -1) {
+                finalCloseParen = markdown.length() - 1;
+                toReturn.add(markdown.substring(finalOpenParen + 1, finalCloseParen));
                 break;
-            }else{
-                lastCloseParen = markdown.lastIndexOf(")", nextLinkOpenBracket);
-                toReturn.add(markdown.substring(lastOpenParen  + 1, lastCloseParen));
-                currentIndex = lastCloseParen + 1;
-                
+            }
+            else {
+                finalCloseParen = markdown.lastIndexOf(")", nextOpenBracket);
+                toReturn.add(markdown.substring(finalOpenParen + 1, finalCloseParen));
+                currentIndex = finalCloseParen + 1;
             }
         }
-       return toReturn;
+        return toReturn;
     }
 
 
