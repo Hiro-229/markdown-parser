@@ -14,10 +14,6 @@ public class MarkdownParse {
         System.out.println(currentIndex);
         while(currentIndex < markdown.length()) {
 
-            if (markdown.substring(currentIndex, currentIndex+1).equals("\n")) {
-                currentIndex++;
-            }
-
             //System.out.println("length of file: " + markdown.length());
 
             int openBracket = markdown.indexOf("[", currentIndex);
@@ -26,18 +22,26 @@ public class MarkdownParse {
             int closeBracket = markdown.indexOf("]", openBracket);
             //System.out.println("closeBracket: " + closeBracket);
 
-            int openParen = markdown.indexOf("(", closeBracket);
+            int lastOpenParen = markdown.indexOf("(", closeBracket);
             //System.out.println("openParen: " + openParen);
 
-            int closeParen = markdown.indexOf(")", openParen);
+            int lastCloseParen = markdown.indexOf(")", lastOpenParen);
             //System.out.println("closeParen: " +closeParen);
 
-            toReturn.add(markdown.substring(openParen + 1, closeParen));
-            currentIndex = closeParen + 1;
-            //System.out.println(currentIndex);
+            int nextLinkOpenBracket = markdown.indexOf("[", lastOpenParen);
+            
+            if(nextLinkOpenBracket == -1){
+                lastCloseParen = markdown.length() - 1;
+                toReturn.add(markdown.substring(lastOpenParen + 1, lastCloseParen));
+                break;
+            }else{
+                lastCloseParen = markdown.lastIndexOf(")", nextLinkOpenBracket);
+                toReturn.add(markdown.substring(lastOpenParen  + 1, lastCloseParen));
+                currentIndex = lastCloseParen + 1;
+                
+            }
         }
-
-        return toReturn;
+       return toReturn;
     }
 
 
