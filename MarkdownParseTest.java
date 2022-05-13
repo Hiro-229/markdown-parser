@@ -19,7 +19,7 @@ public class MarkdownParseTest { //class header/new class creation
     // }
 
     @Test
-    public void testfile1() throws IOException { 
+    public void testfile() throws IOException { 
         ArrayList<String> expectedLinks = new ArrayList<String>();
         expectedLinks.add("https://something.com");
         expectedLinks.add("some-thing.html");
