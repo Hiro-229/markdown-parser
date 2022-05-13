@@ -1,0 +1,1 @@
+this is test case sentence [link2](some-thing.html)

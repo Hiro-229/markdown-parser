@@ -19,20 +19,20 @@ public class MarkdownParse {
             if (markdown.charAt(openBracket-1) == '!') {
                 openBracket = markdown.indexOf("[", openBracket+1);
             }
-            if (openBracket == -1) {
+            if (openBracket == -1) { //why check -1 here again?
                 return toReturn;
             }
+            //should check for -1 for other vairbales 
+            //returning too ealry as it could have invalid at the top and valid links following that 
             int closeBracket = markdown.indexOf("]", openBracket);
             int finalOpenParen = markdown.indexOf("(", closeBracket);
             int finalCloseParen = markdown.indexOf(")", finalOpenParen);
             int nextOpenBracket = markdown.indexOf("[", finalOpenParen);
             if (nextOpenBracket == -1) {
-                finalCloseParen = markdown.length() - 1;
                 toReturn.add(markdown.substring(finalOpenParen + 1, finalCloseParen));
                 break;
             }
             else {
-                finalCloseParen = markdown.lastIndexOf(")", nextOpenBracket);
                 toReturn.add(markdown.substring(finalOpenParen + 1, finalCloseParen));
                 currentIndex = finalCloseParen + 1;
             }
