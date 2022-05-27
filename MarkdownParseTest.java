@@ -101,4 +101,43 @@ public class MarkdownParseTest { //class header/new class creation
     //     ArrayList<String> links = MarkdownParse.getLinks(content);
 	//     assertEquals(expectedLinks, links);
     // }
+    // @Test
+    // public void testSnippet1() throws IOException{
+    //     ArrayList<String> expectedLinks = new ArrayList<>();
+    //     Path fileName = Path.of("Snippet1.md");
+    //     String content = Files.readString(fileName);
+    //     ArrayList<String> links = MarkdownParse.getLinks(content);
+
+    //     expectedLinks.add("`google.com");
+    //     expectedLinks.add("google.com");
+    //     expectedLinks.add("ucsd.edu");
+
+    //     assertEquals(expectedLinks, links);
+    // }
+
+    @Test
+    public void testSnippet2() throws IOException{
+        ArrayList<String> expectedLinks = new ArrayList<>();
+        Path fileName = Path.of("Snippet2.md");
+        String content = Files.readString(fileName);
+        ArrayList<String> links = MarkdownParse.getLinks(content);
+
+        expectedLinks.add("a.com");
+        expectedLinks.add("a.com(())");
+        expectedLinks.add("example.com");
+
+        assertEquals(expectedLinks, links);
+    }
+
+    @Test
+    public void testSnippet3() throws IOException{
+        ArrayList<String> expectedLinks = new ArrayList<>();
+        Path fileName = Path.of("Snippet3.md");
+        String content = Files.readString(fileName);
+        ArrayList<String> links = MarkdownParse.getLinks(content);
+
+        expectedLinks.add("https://sites.google.com/eng.ucsd.edu/cse-15l-spring-2022/schedule");
+
+        assertEquals(expectedLinks, links);
+    }
 }
